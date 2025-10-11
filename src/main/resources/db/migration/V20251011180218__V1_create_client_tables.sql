@@ -2,7 +2,7 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 CREATE TABLE client (
     id BIGSERIAL PRIMARY KEY,
-    public_id UUID NOT NULL UNIQUE DEFAULT gen_random_uuid(),
+    public_id UUID NOT NULL UNIQUE,
     created TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
     updated TIMESTAMP WITH TIME ZONE,
     deleted BOOLEAN NOT NULL DEFAULT FALSE,
@@ -13,12 +13,10 @@ CREATE TABLE client (
 
 CREATE TABLE person_client (
     id BIGSERIAL PRIMARY KEY REFERENCES client(id) ON DELETE CASCADE,
-    public_id UUID NOT NULL UNIQUE DEFAULT gen_random_uuid(),
     birthdate DATE NOT NULL
 );
 
 CREATE TABLE company_client (
     id BIGSERIAL PRIMARY KEY REFERENCES client(id) ON DELETE CASCADE,
-    public_id UUID NOT NULL UNIQUE DEFAULT gen_random_uuid(),
     company_identifier VARCHAR(50) NOT NULL UNIQUE
 );

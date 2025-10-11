@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -15,9 +13,9 @@ import java.util.UUID;
 @MappedSuperclass
 @Getter
 @Setter
-@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 public abstract class BaseEntity {
 
     @Id
@@ -25,17 +23,23 @@ public abstract class BaseEntity {
     private Long id;
     @Column(nullable = false, unique = true, updatable = false)
     private UUID publicId;
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT NOW()")
     private OffsetDateTime created;
-    @UpdateTimestamp
     private OffsetDateTime updated;
     @Column(nullable = false)
-    private Boolean deleted;
+    private boolean deleted = false;
 
     @PrePersist
-    public void prePersist() {
-        if (publicId == null) publicId = UUID.randomUUID();
-        if (deleted == null) deleted = false;
+    protected void onCreate() {
+        if (publicId == null) {
+            publicId = UUID.randomUUID();
+        }
+        created = OffsetDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updated = OffsetDateTime.now();
     }
 }
+

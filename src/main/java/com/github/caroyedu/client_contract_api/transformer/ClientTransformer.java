@@ -27,9 +27,6 @@ public class ClientTransformer {
     private void mapDtoToModel(CreateClientRequest dto, Client model){
         model.setName(dto.getName());
         model.setEmail(dto.getEmail());
-        model.setCreated(OffsetDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
-        model.setPublicId(UUID.randomUUID());
         model.setPhone(dto.getPhone());
-        model.setDeleted(false);
     }
 }

@@ -9,17 +9,15 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @SuperBuilder
+@PrimaryKeyJoinColumn(name = "id")
 public class PersonClient extends Client {
     @NotNull
     @Past
     private LocalDate birthdate;
-    @Column(unique = true)
-    private UUID publicId;
 }
