@@ -28,7 +28,7 @@ public class ClientController {
             URI location = URI.create("/clients/" + client.getPublicId());
             return ResponseEntity.created(location).body(client);
         } catch (Exception e) {
-            throw new RuntimeException("Exception while creating a new Client: " + e.getMessage(), e);
+            throw new RuntimeException("Exception while creating a new client: " + e.getMessage(), e);
         }
     }
 
@@ -44,7 +44,7 @@ public class ClientController {
             Client client = clientService.updateClient(updateClientRequest);
             return ResponseEntity.ok().body(client);
         } catch (Exception e) {
-            throw new RuntimeException("Exception while updating a Client: " + e.getMessage(), e);
+            throw new RuntimeException("Exception while updating a client: " + e.getMessage(), e);
         }
     }
 }

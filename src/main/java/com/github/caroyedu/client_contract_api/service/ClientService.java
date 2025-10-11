@@ -41,7 +41,7 @@ public class ClientService {
             companyClient = companyClientRepository.save(companyClient);
             return companyClient;
         } else {
-            throw new IllegalArgumentException("The Client has not been created as the requested received an unknown type: " + type);
+            throw new IllegalArgumentException("The client has not been created as the requested received an unknown type: " + type);
         }
     }
 
