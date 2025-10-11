@@ -1,15 +1,11 @@
 package com.github.caroyedu.client_contract_api.transformer;
 
 import com.github.caroyedu.client_contract_api.dto.request.CreateClientRequest;
+import com.github.caroyedu.client_contract_api.dto.request.UpdateClientRequest;
 import com.github.caroyedu.client_contract_api.model.Client;
 import com.github.caroyedu.client_contract_api.model.CompanyClient;
 import com.github.caroyedu.client_contract_api.model.PersonClient;
 import org.springframework.stereotype.Service;
-
-import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.util.UUID;
 
 @Service
 public class ClientTransformer {
@@ -25,6 +21,12 @@ public class ClientTransformer {
     }
 
     private void mapDtoToModel(CreateClientRequest dto, Client model){
+        model.setName(dto.getName());
+        model.setEmail(dto.getEmail());
+        model.setPhone(dto.getPhone());
+    }
+
+    public void updateModelFromDto(Client model, UpdateClientRequest dto){
         model.setName(dto.getName());
         model.setEmail(dto.getEmail());
         model.setPhone(dto.getPhone());

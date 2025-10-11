@@ -1,6 +1,7 @@
 package com.github.caroyedu.client_contract_api.controller;
 
 import com.github.caroyedu.client_contract_api.dto.request.CreateClientRequest;
+import com.github.caroyedu.client_contract_api.dto.request.UpdateClientRequest;
 import com.github.caroyedu.client_contract_api.model.Client;
 import com.github.caroyedu.client_contract_api.service.ClientService;
 import lombok.AllArgsConstructor;
@@ -35,5 +36,15 @@ public class ClientController {
     public ResponseEntity<Client> getClient(@PathVariable UUID publicId){
         Optional<Client> client = clientService.getClient(publicId);
         return client.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PutMapping
+    public ResponseEntity<Client> updateClient(@RequestBody UpdateClientRequest updateClientRequest){
+        try {
+            Client client = clientService.updateClient(updateClientRequest);
+            return ResponseEntity.ok().body(client);
+        } catch (Exception e) {
+            throw new RuntimeException("Exception while updating a Client: " + e.getMessage(), e);
+        }
     }
 }
