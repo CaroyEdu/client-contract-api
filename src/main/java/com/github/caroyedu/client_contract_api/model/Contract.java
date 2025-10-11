@@ -26,6 +26,6 @@ public class Contract extends BaseEntity {
     private LocalDate startDate = LocalDate.now();
     private LocalDate endDate;
     @NotNull
-    @DecimalMin(value = "0.0", inclusive = false, message = "Cost amount must be greater than zero")
+    @DecimalMin(value = "0.0", inclusive = true, message = "Cost amount must be greater than zero")
     private BigDecimal costAmount;
 }

@@ -1,16 +1,15 @@
 package com.github.caroyedu.client_contract_api.controller;
 
 import com.github.caroyedu.client_contract_api.dto.request.CreateContractRequest;
+import com.github.caroyedu.client_contract_api.dto.request.PatchContractCostAmount;
 import com.github.caroyedu.client_contract_api.model.Contract;
 import com.github.caroyedu.client_contract_api.service.ContractService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -28,4 +27,11 @@ public class ContractController {
             throw new RuntimeException("An error occurred while creating a new contract: " + e.getMessage(), e);
         }
     }
+
+    @PatchMapping("/{publicId}")
+    public ResponseEntity<Contract> patchContractCostAmount(@PathVariable UUID publicId, @RequestBody PatchContractCostAmount patchRequest) {
+        Contract updatedContract = contractService.patchContractCostAmount(publicId, patchRequest);
+        return ResponseEntity.ok(updatedContract);
+    }
+
 }
