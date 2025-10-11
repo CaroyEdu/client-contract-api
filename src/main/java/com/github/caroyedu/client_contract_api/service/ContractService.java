@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -48,5 +49,9 @@ public class ContractService {
         Contract contract = optionalContract.get();
         contract.setCostAmount(patchRequest.getCostAmount());
         return contractRepository.save(contract);
+    }
+
+    public List<Contract> getContractsByClientPublicId(UUID publicId){
+        return contractRepository.findAllByClientPublicIdAndIsActive(publicId);
     }
 }

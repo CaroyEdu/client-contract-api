@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -32,6 +33,13 @@ public class ContractController {
     public ResponseEntity<Contract> patchContractCostAmount(@PathVariable UUID publicId, @RequestBody PatchContractCostAmount patchRequest) {
         Contract updatedContract = contractService.patchContractCostAmount(publicId, patchRequest);
         return ResponseEntity.ok(updatedContract);
+    }
+
+    // TODO Add filter for update date
+    @GetMapping("client/{publicId}")
+    public ResponseEntity<List<Contract>> getContractsByClientPublicId(@PathVariable UUID publicId){
+        List<Contract> contractList = contractService.getContractsByClientPublicId(publicId);
+        return ResponseEntity.ok(contractList);
     }
 
 }
