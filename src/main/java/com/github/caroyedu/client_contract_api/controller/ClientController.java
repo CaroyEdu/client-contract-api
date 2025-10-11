@@ -6,14 +6,12 @@ import com.github.caroyedu.client_contract_api.model.Client;
 import com.github.caroyedu.client_contract_api.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.Optional;
 import java.util.UUID;
 
-@Controller
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "/clients")
@@ -38,13 +36,19 @@ public class ClientController {
         return client.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PutMapping
-    public ResponseEntity<Client> updateClient(@RequestBody UpdateClientRequest updateClientRequest){
-        try {
-            Client client = clientService.updateClient(updateClientRequest);
-            return ResponseEntity.ok().body(client);
-        } catch (Exception e) {
-            throw new RuntimeException("Exception while updating a client: " + e.getMessage(), e);
+    @PutMapping("/{publicId}")
+    public ResponseEntity<Client> updateClient(@PathVariable UUID publicId, @RequestBody UpdateClientRequest updateClientRequest) {
+        Client updatedClient = clientService.updateClient(publicId, updateClientRequest);
+        return ResponseEntity.ok(updatedClient);
+    }
+
+    @DeleteMapping("/{publicId}")
+    public ResponseEntity<Void> deleteClient(@PathVariable UUID publicId) {
+        boolean deleted = clientService.deleteClient(publicId);
+        if (deleted) {
+            return ResponseEntity.noContent().build(); // 204
+        } else {
+            return ResponseEntity.notFound().build(); // 404
         }
     }
 }

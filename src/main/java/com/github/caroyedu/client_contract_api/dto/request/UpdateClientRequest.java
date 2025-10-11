@@ -17,8 +17,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UpdateClientRequest {
     @NotBlank
-    private UUID clientPublicId;
-    @NotBlank
     private String name;
     @Email
     private String email;
