@@ -1,6 +1,6 @@
 package com.github.caroyedu.client_contract_api.model;
 
-import com.github.juanperez.clientcontractapi.model.base.BaseEntity;
+import com.github.caroyedu.client_contract_api.model.base.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
@@ -20,7 +20,7 @@ import java.time.LocalDate;
 public class Contract extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_public_id", referencedColumnName = "publicId", nullable = false)
+    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
     private Client client;
     @NotNull
     private LocalDate startDate = LocalDate.now();

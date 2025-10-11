@@ -2,10 +2,10 @@ CREATE TABLE contract (
     id BIGSERIAL PRIMARY KEY,
     public_id UUID NOT NULL UNIQUE DEFAULT gen_random_uuid(),
     created TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
-    updated TIMESTAMP WITH TIME ZONE NULL,
+    updated TIMESTAMP WITH TIME ZONE,
     deleted BOOLEAN NOT NULL DEFAULT FALSE,
-    client_public_id UUID NOT NULL REFERENCES client(public_id) ON DELETE CASCADE,
-    start_date DATE NOT NULL DEFAULT CURRENT_DATE,
+    client_id BIGINT NOT NULL REFERENCES client(id) ON DELETE CASCADE,
+    start_date DATE NOT NULL DEFAULT NOW(),
     end_date DATE NULL,
     cost_amount NUMERIC(10,2) NOT NULL
 );

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @Setter
@@ -16,4 +18,6 @@ public class CompanyClient extends Client {
     @NotBlank
     @Column(unique = true)
     private String companyIdentifier;
+    @Column(unique = true)
+    private UUID publicId;
 }

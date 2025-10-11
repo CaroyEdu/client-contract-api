@@ -1,4 +1,4 @@
-package com.github.juanperez.clientcontractapi.model.base;
+package com.github.caroyedu.client_contract_api.model.base;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

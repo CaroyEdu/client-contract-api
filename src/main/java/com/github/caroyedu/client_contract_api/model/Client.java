@@ -1,6 +1,6 @@
 package com.github.caroyedu.client_contract_api.model;
 
-import com.github.juanperez.clientcontractapi.model.base.BaseEntity;
+import com.github.caroyedu.client_contract_api.model.base.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
