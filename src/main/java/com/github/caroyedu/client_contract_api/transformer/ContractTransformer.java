@@ -1,5 +1,6 @@
 package com.github.caroyedu.client_contract_api.transformer;
 
+import com.github.caroyedu.client_contract_api.dto.ContractDTO;
 import com.github.caroyedu.client_contract_api.dto.request.CreateContractRequest;
 import com.github.caroyedu.client_contract_api.model.Client;
 import com.github.caroyedu.client_contract_api.model.Contract;
@@ -17,5 +18,13 @@ public class ContractTransformer {
         model.setEndDate(dto.getEndDate());
         model.setCostAmount(dto.getCostAmount());
         model.setUpdated(OffsetDateTime.now()); // Business Requirement
+    }
+
+    public void mapDtoFromModel(ContractDTO dto, Contract model){
+        dto.setPublicId(model.getPublicId());
+        dto.setClientPublicId(model.getClient().getPublicId());
+        dto.setStartDate(model.getStartDate());
+        dto.setEndDate(model.getEndDate());
+        dto.setCostAmount(model.getCostAmount());
     }
 }
