@@ -14,7 +14,6 @@ import java.util.UUID;
 public class ContractDTO {
     private UUID publicId;
     private UUID clientPublicId;
-    //TODO Change LocalDate
     private LocalDate startDate;
     private LocalDate endDate;
     private BigDecimal costAmount;

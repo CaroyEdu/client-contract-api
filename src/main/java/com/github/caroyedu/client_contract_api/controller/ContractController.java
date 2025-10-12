@@ -30,6 +30,7 @@ public class ContractController {
         }
     }
 
+    // TODO Check if we have to rename the endpoint
     @PatchMapping("/{publicId}")
     public ResponseEntity<ContractDTO> patchContractCostAmount(@PathVariable UUID publicId, @RequestBody PatchContractCostAmount patchRequest) {
         ContractDTO updatedContract = contractService.patchContractCostAmount(publicId, patchRequest);
@@ -43,6 +44,7 @@ public class ContractController {
         return ResponseEntity.ok(contractList);
     }
 
+    // TODO Add indexes to make it more efficient
     @GetMapping("/totalContractCostAmount/client/{clientPublicId}")
     public ResponseEntity<ContractCostAmountDTO> getContractCostAmountByClientPublicId(@PathVariable UUID clientPublicId){
         ContractCostAmountDTO sum = contractService.getContractCostAmountByClientPublicId(clientPublicId);
