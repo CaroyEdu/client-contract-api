@@ -1,5 +1,8 @@
 package com.github.caroyedu.client_contract_api.service;
 
+import com.github.caroyedu.client_contract_api.dto.ClientDTO;
+import com.github.caroyedu.client_contract_api.dto.CompanyClientDTO;
+import com.github.caroyedu.client_contract_api.dto.PersonClientDTO;
 import com.github.caroyedu.client_contract_api.dto.request.CreateClientRequest;
 import com.github.caroyedu.client_contract_api.dto.request.UpdateClientRequest;
 import com.github.caroyedu.client_contract_api.model.Client;
@@ -32,25 +35,29 @@ public class ClientService {
     private static final String COMPANY = "company";
 
     @Transactional
-    public Client createClient(CreateClientRequest createClientRequest){
+    public ClientDTO createClient(CreateClientRequest createClientRequest){
         String type = createClientRequest.getType();
         if(type.equals(PERSON)){
             PersonClient personClient = new PersonClient();
             clientTransformer.mapDtoToPersonModel(createClientRequest, personClient);
             personClient = personClientRepository.save(personClient);
-            return personClient;
+            PersonClientDTO dto = new PersonClientDTO();
+            clientTransformer.mapPersonClientToDto(personClient, dto);
+            return dto;
         } else if(type.equals(COMPANY)){
             CompanyClient companyClient = new CompanyClient();
             clientTransformer.mapDtoToCompanyModel(createClientRequest, companyClient);
             companyClient = companyClientRepository.save(companyClient);
-            return companyClient;
+            CompanyClientDTO dto = new CompanyClientDTO();
+            clientTransformer.mapCompanyClientToDto(companyClient, dto);
+            return dto;
         } else {
             throw new IllegalArgumentException("The client has not been created as the requested received an unknown type: " + type);
         }
     }
 
     @Transactional
-    public Client updateClient(UUID publicId, UpdateClientRequest updateClientRequest){
+    public ClientDTO updateClient(UUID publicId, UpdateClientRequest updateClientRequest){
         Optional<Client> optionalClient = clientRepository.findClientByPublicId(publicId);
         if(optionalClient.isEmpty()){
             throw new IllegalArgumentException("Client not found with id: " + publicId);
@@ -58,10 +65,13 @@ public class ClientService {
 
         Client client = optionalClient.get();
         clientTransformer.updateModelFromDto(client, updateClientRequest);
-        return clientRepository.save(client);
+        client = clientRepository.save(client);
+        ClientDTO dto = new ClientDTO();
+        clientTransformer.mapClientDTOFromModel(dto, client);
+        return dto;
     }
 
-    public Optional<Client> getClient(UUID publicId) {
+    public Optional<ClientDTO> getClient(UUID publicId) {
         Optional<Client> clientOpt = clientRepository.findClientByPublicId(publicId);
 
         if (clientOpt.isEmpty()) {
@@ -71,9 +81,13 @@ public class ClientService {
         Client client = clientOpt.get();
 
         if (client instanceof PersonClient personClient) {
-            return Optional.of(personClient);
+            PersonClientDTO dto = new PersonClientDTO();
+            clientTransformer.mapPersonClientToDto(personClient, dto);
+            return Optional.of(dto);
         } else if (client instanceof CompanyClient companyClient) {
-            return Optional.of(companyClient);
+            CompanyClientDTO dto = new CompanyClientDTO();
+            clientTransformer.mapCompanyClientToDto(companyClient, dto);
+            return Optional.of(dto);
         } else {
             throw new IllegalStateException("Unknown client type found for publicId: " + publicId);
         }

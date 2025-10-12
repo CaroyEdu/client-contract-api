@@ -1,8 +1,8 @@
 package com.github.caroyedu.client_contract_api.controller;
 
+import com.github.caroyedu.client_contract_api.dto.ClientDTO;
 import com.github.caroyedu.client_contract_api.dto.request.CreateClientRequest;
 import com.github.caroyedu.client_contract_api.dto.request.UpdateClientRequest;
-import com.github.caroyedu.client_contract_api.model.Client;
 import com.github.caroyedu.client_contract_api.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +20,9 @@ public class ClientController {
     private final ClientService clientService;
 
     @PostMapping
-    public ResponseEntity<Client> createClient(@RequestBody CreateClientRequest createClientRequest){
+    public ResponseEntity<ClientDTO> createClient(@RequestBody CreateClientRequest createClientRequest){
         try {
-            Client client = clientService.createClient(createClientRequest);
+            ClientDTO client = clientService.createClient(createClientRequest);
             URI location = URI.create("/clients/" + client.getPublicId());
             return ResponseEntity.created(location).body(client);
         } catch (Exception e) {
@@ -31,14 +31,14 @@ public class ClientController {
     }
 
     @GetMapping("/{publicId}")
-    public ResponseEntity<Client> getClient(@PathVariable UUID publicId){
-        Optional<Client> client = clientService.getClient(publicId);
+    public ResponseEntity<ClientDTO> getClient(@PathVariable UUID publicId){
+        Optional<ClientDTO> client = clientService.getClient(publicId);
         return client.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{publicId}")
-    public ResponseEntity<Client> updateClient(@PathVariable UUID publicId, @RequestBody UpdateClientRequest updateClientRequest) {
-        Client updatedClient = clientService.updateClient(publicId, updateClientRequest);
+    public ResponseEntity<ClientDTO> updateClient(@PathVariable UUID publicId, @RequestBody UpdateClientRequest updateClientRequest) {
+        ClientDTO updatedClient = clientService.updateClient(publicId, updateClientRequest);
         return ResponseEntity.ok(updatedClient);
     }
 
