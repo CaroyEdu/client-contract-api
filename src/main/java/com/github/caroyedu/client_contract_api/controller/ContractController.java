@@ -37,9 +37,9 @@ public class ContractController {
     }
 
     // TODO Add filter for update date
-    @GetMapping("/client/{publicId}")
-    public ResponseEntity<List<ContractDTO>> getContractsByClientPublicId(@PathVariable UUID publicId){
-        List<ContractDTO> contractList = contractService.getContractsByClientPublicId(publicId);
+    @GetMapping("/client/{clientPublicId}")
+    public ResponseEntity<List<ContractDTO>> getContractsByClientPublicId(@PathVariable UUID clientPublicId){
+        List<ContractDTO> contractList = contractService.getContractsByClientPublicId(clientPublicId);
         return ResponseEntity.ok(contractList);
     }
 
