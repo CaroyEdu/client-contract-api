@@ -1,5 +1,6 @@
 package com.github.caroyedu.client_contract_api.controller;
 
+import com.github.caroyedu.client_contract_api.dto.ContractCostAmountDTO;
 import com.github.caroyedu.client_contract_api.dto.request.CreateContractRequest;
 import com.github.caroyedu.client_contract_api.dto.request.PatchContractCostAmount;
 import com.github.caroyedu.client_contract_api.model.Contract;
@@ -36,10 +37,16 @@ public class ContractController {
     }
 
     // TODO Add filter for update date
-    @GetMapping("client/{publicId}")
+    @GetMapping("/client/{publicId}")
     public ResponseEntity<List<Contract>> getContractsByClientPublicId(@PathVariable UUID publicId){
         List<Contract> contractList = contractService.getContractsByClientPublicId(publicId);
         return ResponseEntity.ok(contractList);
+    }
+
+    @GetMapping("/totalContractCostAmount/client/{clientPublicId}")
+    public ResponseEntity<ContractCostAmountDTO> getContractCostAmountByClientPublicId(@PathVariable UUID clientPublicId){
+        ContractCostAmountDTO sum = contractService.getContractCostAmountByClientPublicId(clientPublicId);
+        return ResponseEntity.ok(sum);
     }
 
 }

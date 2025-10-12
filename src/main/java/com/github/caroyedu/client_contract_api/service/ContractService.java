@@ -1,5 +1,6 @@
 package com.github.caroyedu.client_contract_api.service;
 
+import com.github.caroyedu.client_contract_api.dto.ContractCostAmountDTO;
 import com.github.caroyedu.client_contract_api.dto.request.CreateContractRequest;
 import com.github.caroyedu.client_contract_api.dto.request.PatchContractCostAmount;
 import com.github.caroyedu.client_contract_api.model.Client;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -53,5 +55,19 @@ public class ContractService {
 
     public List<Contract> getContractsByClientPublicId(UUID publicId){
         return contractRepository.findAllByClientPublicIdAndIsActive(publicId);
+    }
+
+    public ContractCostAmountDTO getContractCostAmountByClientPublicId(UUID clientPublicId){
+        List<Contract> contracts = contractRepository.findAllByClientPublicIdAndIsActive(clientPublicId);
+        if(contracts.isEmpty()){
+            return null;
+        }
+
+        BigDecimal sum = new BigDecimal(0);
+        for(Contract contract : contracts){
+            sum = sum.add(contract.getCostAmount());
+        }
+
+        return new ContractCostAmountDTO(sum);
     }
 }
