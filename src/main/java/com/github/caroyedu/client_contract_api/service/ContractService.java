@@ -74,16 +74,7 @@ public class ContractService {
     }
 
     public ContractCostAmountDTO getContractCostAmountByClientPublicId(UUID clientPublicId){
-        List<Contract> contracts = contractRepository.findAllByClientPublicIdAndIsActive(clientPublicId);
-        if(contracts.isEmpty()){
-            return null;
-        }
-
-        BigDecimal sum = new BigDecimal(0);
-        for(Contract contract : contracts){
-            sum = sum.add(contract.getCostAmount());
-        }
-
-        return new ContractCostAmountDTO(sum);
+        BigDecimal sum = contractRepository.findTotalCostAmountByClientPublicId(clientPublicId);
+        return new ContractCostAmountDTO(sum != null ? sum : BigDecimal.ZERO);
     }
 }
