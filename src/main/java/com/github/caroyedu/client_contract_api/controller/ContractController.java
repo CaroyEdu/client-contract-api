@@ -6,10 +6,12 @@ import com.github.caroyedu.client_contract_api.dto.request.CreateContractRequest
 import com.github.caroyedu.client_contract_api.dto.request.PatchContractCostAmount;
 import com.github.caroyedu.client_contract_api.service.ContractService;
 import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,12 +38,12 @@ public class ContractController {
         return ResponseEntity.ok(updatedContract);
     }
 
-    // TODO Add filter for update date
     @GetMapping("/client/{clientPublicId}")
-    public ResponseEntity<List<ContractDTO>> getContractsByClientPublicId(@PathVariable UUID clientPublicId){
-        List<ContractDTO> contractList = contractService.getContractsByClientPublicId(clientPublicId);
-        return ResponseEntity.ok(contractList);
+    public ResponseEntity<List<ContractDTO>> getContractsByClientPublicId(@PathVariable UUID clientPublicId, @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedAfter) {
+        List<ContractDTO> contracts = contractService.getContractsByClientPublicId(clientPublicId, updatedAfter);
+        return ResponseEntity.ok(contracts);
     }
+
 
     @GetMapping("/totalContractCostAmount/client/{clientPublicId}")
     public ResponseEntity<ContractCostAmountDTO> getContractCostAmountByClientPublicId(@PathVariable UUID clientPublicId){

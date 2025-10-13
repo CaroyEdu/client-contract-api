@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,4 +19,14 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
     List<Contract> findAllByClientPublicIdAndIsActive(UUID publicId);
     @Query("SELECT SUM(c.costAmount) FROM Contract c JOIN c.client cl WHERE cl.publicId = :publicId AND (c.endDate IS NULL OR c.endDate > CURRENT_DATE) AND c.deleted = false")
     BigDecimal findTotalCostAmountByClientPublicId(UUID publicId);
+    @Query("""
+    SELECT c FROM Contract c
+    JOIN c.client cl
+    WHERE cl.publicId = :publicId
+      AND (c.endDate IS NULL OR c.endDate > CURRENT_DATE)
+      AND c.deleted = false
+      AND c.updated > :updatedAfter
+""")
+    List<Contract> findAllByClientPublicIdAndIsActiveAndUpdatedAfter(UUID publicId, LocalDateTime updatedAfter);
+
 }

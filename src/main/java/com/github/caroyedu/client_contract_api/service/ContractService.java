@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -62,16 +63,24 @@ public class ContractService {
         return contractDTO;
     }
 
-    public List<ContractDTO> getContractsByClientPublicId(UUID publicId){
-        List<Contract> contracts = contractRepository.findAllByClientPublicIdAndIsActive(publicId);
-        List<ContractDTO> contractDTOS = new ArrayList<>();
-        for(Contract contract : contracts){
-            ContractDTO contractDTO = new ContractDTO();
-            contractTransformer.mapDtoFromModel(contractDTO, contract);
-            contractDTOS.add(contractDTO);
+    public List<ContractDTO> getContractsByClientPublicId(UUID publicId, LocalDateTime updatedAfter) {
+        List<Contract> contracts;
+
+        if (updatedAfter != null) {
+            contracts = contractRepository.findAllByClientPublicIdAndIsActiveAndUpdatedAfter(publicId, updatedAfter);
+        } else {
+            contracts = contractRepository.findAllByClientPublicIdAndIsActive(publicId);
         }
-        return contractDTOS;
+
+        return contracts.stream()
+                .map(contract -> {
+                    ContractDTO dto = new ContractDTO();
+                    contractTransformer.mapDtoFromModel(dto, contract);
+                    return dto;
+                })
+                .toList();
     }
+
 
     public ContractCostAmountDTO getContractCostAmountByClientPublicId(UUID clientPublicId){
         BigDecimal sum = contractRepository.findTotalCostAmountByClientPublicId(clientPublicId);
