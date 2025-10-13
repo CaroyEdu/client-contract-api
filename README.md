@@ -144,3 +144,36 @@ src/main/resources/application.yml
 ```
 
 Update these values to match your local database configuration, if needed.
+
+## 🚀 How to Use the API
+
+![images/img.png](images/img.png)
+
+The easiest way to explore and interact with this API is through the **integrated Swagger UI**, available at:
+
+👉 **[http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)**
+
+Once the application is running, open this URL in your browser to access a fully interactive API documentation interface.
+
+### 🧭 What You Can Do in Swagger UI
+
+- Browse all available **endpoints**, grouped by controller or resource.
+- View detailed **descriptions**, **request/response examples**, and **data schemas** (including field types, constraints, and nested objects).
+- Try out requests directly from the browser — no need for an external client like Postman.
+- Inspect **response codes** and payloads in real time.
+
+![images/img2.png](images/img2.png)
+
+### 🧰 Alternative: Using Postman (Optional)
+
+If you prefer using **Postman** or another REST client:
+
+1. Start the Spring Boot application.
+2. Make requests to `http://localhost:8080/api/...` (adjusting for the endpoints).
+3. Use JSON payloads as shown in the Swagger examples.
+4. Add appropriate headers such as:
+
+   ```http
+   Content-Type: application/json
+   Accept: application/json
+   ```
