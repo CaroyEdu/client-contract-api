@@ -1,8 +1,12 @@
 spring:
+  profiles:
+      active: local # We are using the local by default, but we could change this to dev, prod...
   datasource:
-    url: jdbc:postgresql://localhost:5432/client-contract-api
-    username: postgres
-    password: password
+    # In a real environment, these variables (DB_USER, DB_PASS...) would be defined
+    # as environment variables or managed through a secret manager.
+    url: jdbc:postgresql://${DB_HOST}:5432/client-contract-api
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
