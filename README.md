@@ -14,6 +14,20 @@ An API using the factory design pattern in Java Spring Boot to manage clients an
 
 All timestamps follow ISO 8601, and validation is applied to dates, emails, and phone numbers.
 
+## Why this API works?
+
+This API works because it fulfills all the core requirements of the technical exercise while also following real-world REST API standards.
+Although it’s not a production system, its architecture, conventions, and practices align closely with what would be expected in a real project.
+
+It goes beyond the minimum requirements to demonstrate good design principles and production-readiness:
+- Uses Flyway to version and trace all database changes, ensuring that the database schema can be recreated consistently in any environment.
+- Includes unit and integration tests, a critical part of validating that every endpoint behaves as expected — testing is considered a core pillar before deploying any API to production.
+- Structured following Spring Boot best practices, with clear package separation (controller, service, repository, model, dto, transformer) so that any developer familiar with Spring can quickly understand and extend the project.
+- Implements UUIDs (publicId) in addition to incremental IDs, making the design more microservice-friendly and suitable for distributed architectures.
+- Built using modern and widely adopted technologies, ensuring maintainability and scalability.
+
+While this API doesn’t include user authentication or authorization, that layer could easily be added as a next step to make the system more complete.
+
 ## Backend
 
 - **Technology:** Java 21 (OpenJDK 21.0.8), Spring Boot with Maven
@@ -163,6 +177,28 @@ Once the application is running, open this URL in your browser to access a fully
 - Inspect **response codes** and payloads in real time.
 
 ![images/img2.png](images/img2.png)
+
+Here you have some examples of JSON content to create some Person and Company clients:
+
+```
+{
+  "type": "person",
+  "name": "client",
+  "email": "personclient@example.com",
+  "phone": "+367056004135",
+  "birthdate": "1967-10-15"
+}
+```
+
+```
+{
+  "type": "company",
+  "name": "client",
+  "email": "companyclient@example.com",
+  "phone": "+367056004135",
+  "companyIdentifier": "111-aaa"
+}
+```
 
 ### 🧰 Alternative: Using Postman (Optional)
 

@@ -12,4 +12,6 @@ import java.util.UUID;
 public interface ClientRepository extends JpaRepository<Client, UUID> {
     @Query("SELECT c FROM Client c WHERE c.publicId = :publicId")
     Optional<Client> findClientByPublicId(UUID publicId);
+
+    Optional<Client> findClientByEmail(String email);
 }

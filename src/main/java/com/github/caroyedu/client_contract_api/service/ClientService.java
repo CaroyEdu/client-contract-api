@@ -36,6 +36,11 @@ public class ClientService {
 
     @Transactional
     public ClientDTO createClient(CreateClientRequest createClientRequest){
+        String email = createClientRequest.getEmail();
+        Optional<Client> optionalClient = clientRepository.findClientByEmail(email);
+        if(optionalClient.isPresent()) {
+            throw new IllegalArgumentException("Client creation failed as a client already exists with this email: " + email);
+        }
         String type = createClientRequest.getType();
         if(type.equals(PERSON)){
             PersonClient personClient = new PersonClient();
