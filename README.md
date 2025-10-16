@@ -65,7 +65,7 @@ While this API doesn’t include user authentication or authorization, that laye
 
 - Java 21 SDK
 - PostgreSQL 17.5
-- Docker (To run PostgreSQL)
+- Docker (To run PostgreSQL Testcontainers)
 
 ### PostgreSQL Setup
 
