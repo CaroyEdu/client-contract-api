@@ -35,6 +35,7 @@ While this API doesn’t include user authentication or authorization, that laye
 - **Database Migrations:** Flyway
 - **Code Utilities:** Lombok for cleaner code
 - **Data Access:** Spring JPA
+- **Tests:** Test Containers to create integration tests for all the functionalities of the API
 
 ## Features
 
@@ -66,6 +67,10 @@ While this API doesn’t include user authentication or authorization, that laye
 - Java 21 SDK
 - PostgreSQL 17.5
 - Docker (To run PostgreSQL Testcontainers)
+
+### Docker Setup
+
+You can download and install Docker Desktop for any OS from here: https://docs.docker.com/get-started/get-docker/
 
 ### PostgreSQL Setup
 
